@@ -17,8 +17,8 @@ query loginUserRepository($loginUser: String!, $firstFetchNums: Int!) {
   }
 }
 `;
-const loginUser = "hiroharu8864";
-const firstFetchNums = 100;
+const loginUserReposName = "hiroharu8864";
+const first = 100;
 
 export const useGetRepos = () => {
   const access_token = "ghp_token";
@@ -31,9 +31,12 @@ export const useGetRepos = () => {
   });
 
   const { data, error } = useSWR<GitHubRepos>(
-    [getLoginUserReposQuery, loginUser, firstFetchNums],
-    (query, login, first) =>
-      client.request(query, { loginUser: login, firstFetchNums: first }),
+    [getLoginUserReposQuery, loginUserReposName, first],
+    (query, loginUser, firstFetchNums) =>
+      client.request(query, {
+        loginUser: loginUserReposName,
+        firstFetchNums: first
+      }),
     {
       suspense: true
     }
